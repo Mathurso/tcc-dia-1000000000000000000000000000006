@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reserva de Livro - Book In</title>
+    <link rel="stylesheet" href="style.css"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #F5EFE1; 
+            display: flex;
+            flex-direction: column; 
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #F5EFE1; 
+            padding: 15px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ddd; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05); 
+        }
+
+        header .logo img {
+            height: 40px; 
+        }
+
+        header .nav-container nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 30px; 
+        }
+
+        header .nav-container nav ul li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            font-size: 1.1em;
+            transition: color 0.3s ease;
+        }
+
+        header .nav-container nav ul li a:hover {
+            color: #007bff; 
+        }
+
+        header .search-profile {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        header .search-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        header .search-bar {
+            padding: 8px 12px;
+            padding-right: 35px; 
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            font-size: 0.9em;
+            width: 200px; 
+        }
+
+        header .search-icon {
+            position: absolute;
+            right: 12px;
+            color: #888;
+            cursor: pointer;
+        }
+
+        header .icon {
+            font-size: 1.4em;
+            color: #555;
+            cursor: pointer;
+        }
+
+        header .icon:hover {
+            color: #007bff;
+        }
+
+        .main-content-reserve {
+            flex-grow: 1; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+            box-sizing: border-box;
+        }
+
+        .reserve-card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column; 
+            align-items: center; 
+            padding: 40px;
+            max-width: 900px; 
+            width: 100%;
+            text-align: center;
+        }
+
+        .book-section {
+            display: flex;
+            flex-direction: column; 
+            align-items: center;
+            gap: 30px;
+            width: 100%;
+        }
+
+        .book-cover-wrapper {
+            position: relative; 
+            border: 5px solid #F5EFE1; 
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 5px; 
+            background-color: #F5EFE1; 
+        }
+
+        .book-cover {
+            width: 200px;
+            height: auto;
+            display: block;
+            border: 1px solid #eee; 
+        }
+
+        .more-info-button {
+            background-color: #333; 
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 0.9em;
+            cursor: pointer;
+            position: absolute; 
+            bottom: -20px; 
+            left: 50%;
+            transform: translateX(-50%); 
+            white-space: nowrap; 
+            
+            transition: transform 0.3s ease-out, background-color 0.3s ease; 
+        }
+
+        .more-info-button:hover {
+            background-color: #555; 
+            transform: translateX(-50%) translateY(5px); 
+        }
+
+        .book-details {
+            text-align: left; 
+            flex-grow: 1; 
+            margin-top: 20px; 
+        }
+
+        .book-details h1 {
+            font-size: 2.5em;
+            color: #333;
+            margin-bottom: 5px;
+            margin-top: 0;
+            line-height: 1.2;
+        }
+
+        .book-details .author {
+            font-size: 1.2em;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .availability {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #28a745; 
+            margin-bottom: 25px;
+        }
+
+        .reserve-call-to-action {
+            margin-top: 40px; 
+        }
+
+        .reserve-call-to-action h2 {
+            font-size: 2em;
+            color: #333;
+            margin-bottom: 10px;
+            margin-top: 0;
+        }
+
+        .reserve-call-to-action p {
+            font-size: 1.1em;
+            color: #666;
+            margin-bottom: 25px;
+        }
+
+        .generate-code-button {
+            background-color: #faeeba; 
+            color: #333;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 30px; 
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .generate-code-button:hover {
+            background-color:#fde98d; 
+            transform: translateY(-2px); 
+        }
+
+        #code-overlay {
+            display: none; 
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1001;
+        }
+
+        #code-overlay > div {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            position: relative;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        #code-overlay .close-overlay-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            cursor: pointer;
+            color: #555;
+            text-decoration: none;
+        }
+
+        #code-overlay .close-overlay-btn:hover {
+            color: #000;
+        }
+
+        #display-code {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #941f1f; 
+            margin: 20px 0;
+            padding: 15px;
+            border: 2px dashed #941f1f; 
+            border-radius: 5px;
+            background-color: #f7e6e6; 
+            word-break: break-all; 
+        }
+
+        .overlay-home-button {
+            background-color: #941f1f; 
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            margin-top: 20px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .overlay-home-button:hover {
+            background-color: #7a1a1a; 
+        }
+
+
+        @media (min-width: 768px) {
+            .book-section {
+                flex-direction: row; 
+                text-align: left; 
+                align-items: flex-start; 
+            }
+
+            .reserve-card {
+                padding: 50px;
+            }
+            .book-details {
+                margin-top: 0; 
+            }
+        }
+
+        @media (max-width: 480px) {
+            header {
+                padding: 10px 20px;
+                flex-wrap: wrap; 
+                justify-content: center;
+                gap: 15px;
+            }
+            header .nav-container,
+            header .search-profile {
+                width: 100%;
+                justify-content: center;
+            }
+            header .search-bar {
+                width: 150px;
+            }
+            .reserve-card {
+                padding: 20px;
+            }
+            .book-details h1 {
+                font-size: 2em;
+            }
+            .book-details .author, .availability {
+                font-size: 1em;
+            }
+            .reserve-call-to-action h2 {
+                font-size: 1.6em;
+            }
+            .reserve-call-to-action p {
+                font-size: 1em;
+            }
+            .generate-code-button {
+                font-size: 1em;
+                padding: 12px 20px;
+            }
+            .book-cover-wrapper {
+                padding: 3px;
+                border: 3px solid #F5EFE1;
+            }
+            .book-cover {
+                width: 150px;
+            }
+            .more-info-button {
+                font-size: 0.8em;
+                padding: 6px 10px;
+                bottom: -15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo"><img src="Book In.png" alt="Logo" id="logo"></div>
+        <div class="nav-container">
+            <nav>
+                <ul>
+                    <li><a href="index.html#home" class="nav-link">Início</a></li>
+                    <li><a href="index.html#catalogo" class="nav-link">Catálogo</a></li>
+                    <li><a href="index.html#disponiveis" class="nav-link">Disponíveis</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="search-profile">
+            <div class="search-container">
+                <input type="text" class="search-bar" placeholder="Procure um livro aqui">
+                <i class="fas fa-search search-icon"></i>
+            </div>
+            <div class="icon"><i class="fas fa-bell"></i></div> 
+            <div class="icon profile-icon"><i class="fas fa-user"></i></div>
+        </div>
+    </header>
+
+    <main class="main-content-reserve">
+        <div class="reserve-card">
+            <div class="book-section">
+                <div class="book-cover-wrapper">
+                    <img id="reserved-book-cover" src="" alt="Capa do Livro" class="book-cover">
+                    <button class="more-info-button" onclick="history.back()">Ver mais sobre o livro</button>
+                </div>
+                <div class="book-details">
+                    <h1 id="reserved-book-title"></h1>
+                    <p class="author" id="reserved-book-author"></p>
+                    <p class="availability">Disponibilidade: <span id="reserved-book-availability"></span></p>
+                </div>
+            </div>
+
+            <div class="reserve-call-to-action">
+                <h2>Vou ler agora</h2>
+                <p>Vai pegar este livro na biblioteca?</p>
+                <button class="generate-code-button" onclick="generateAndShowCode()">Gerar meu código</button>
+            </div>
+        </div>
+    </main>
+
+    <div id="code-overlay">
+        <div>
+            <span class="close-overlay-btn" onclick="closeCodeOverlay()">&times;</span>
+            <h2>Seu Código de Reserva!</h2>
+            <p>Apresente este código na recepção da biblioteca:</p>
+            <div id="display-code"></div>
+            <p style="font-size: 0.9em; color: #888;">Válido por 24 horas.</p>
+            <a href="index.html" class="overlay-home-button">Voltar para o Início</a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const params = new URLSearchParams(window.location.search);
+            const title = params.get('title');
+            const author = params.get('author');
+            const cover = params.get('cover'); 
+            const availability = params.get('availability') || 'Disponível';
+
+            document.getElementById('reserved-book-title').textContent = title || 'Livro Desconhecido';
+            document.getElementById('reserved-book-author').textContent = author || 'Autor Desconhecido';
+            
+            const reservedBookCover = document.getElementById('reserved-book-cover');
+            if (cover) {
+                reservedBookCover.src = cover; 
+            } else {
+                reservedBookCover.src = 'placeholder.jpg'; 
+                console.warn("Caminho da capa do livro não foi fornecido na URL. Usando placeholder.jpg");
+            }
+
+            const availabilitySpan = document.getElementById('reserved-book-availability');
+            availabilitySpan.textContent = availability;
+            if (availability === 'Disponível') {
+                availabilitySpan.classList.add('available-status');
+                availabilitySpan.classList.remove('unavailable'); 
+                availabilitySpan.classList.add('unavailable');
+                availabilitySpan.classList.remove('available-status'); 
+            }
+        });
+
+        function generateAndShowCode() {
+    const code = generateRandomCode(6); 
+    document.getElementById('display-code').textContent = code;
+    document.getElementById('code-overlay').style.display = 'flex'; 
+}
+
+function generateRandomCode(length) {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let code = '';
+    for (let i = 0; i < length; i++) {
+        const randomIndex = Math.floor(Math.random() * chars.length);
+        code += chars[randomIndex];
+    }
+    return code;
+}
+
+ 
+    </script>
+</body>
+</html>

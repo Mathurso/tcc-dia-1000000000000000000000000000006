@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Detalhes do Livro - Book In</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: rgba(0, 0, 0, 0.7);
+            margin: 0;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+
+        .book-details-content {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 800px;
+            position: relative;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            align-items: flex-start;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            cursor: pointer;
+            color: #555;
+            text-decoration: none;
+        }
+
+        .close-btn:hover {
+            color: #000;
+        }
+
+        .details-main {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+
+        .details-main img {
+            max-width: 200px;
+            height: auto;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .details-info {
+            flex: 1;
+        }
+
+        .details-info h2 {
+            margin-top: 0;
+            color: #333;
+            font-size: 1.8em;
+        }
+
+        .details-info p {
+            margin-bottom: 10px;
+            line-height: 1.6;
+            color: #666;
+        }
+
+        .details-info p strong {
+            color: #333;
+        }
+
+        .available-status {
+            color: green;
+            font-weight: bold;
+        }
+
+        .unavailable {
+            color: red;
+            font-weight: bold;
+        }
+
+        .book-pickup-question {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #444;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .get-book-button {
+            background-color: #28a745;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .get-book-button:hover {
+            background-color: #218838;
+        }
+
+        .borrow-btn {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 15px;
+            transition: background-color 0.3s ease;
+        }
+
+        .borrow-btn:hover {
+            background-color: #0056b3;
+        }
+
+        @media (max-width: 768px) {
+            .book-details-content {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .details-main {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .details-main img {
+                max-width: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="book-details-content">
+        <a href="index.html" class="close-btn">&times;</a>
+        <div class="details-main">
+            <img id="details-book-cover" src="" alt="Capa do Livro">
+            <div class="details-info">
+                <h2 id="details-book-title"></h2>
+                <p><strong>Autor:</strong> <span id="details-book-author"></span></p>
+                <p><strong>Ano de Publicação:</strong> <span id="details-book-year"></span></p>
+                <p><strong>Disponibilidade:</strong> <span id="details-book-availability"></span></p>
+                <p id="details-book-description"></p>
+                <p class="book-pickup-question">Vai pegar este livro na biblioteca?</p>
+                <button id="get-book-btn" class="get-book-button" onclick="goToReservePage()">Pegue o livro na biblioteca</button>
+                <button id="details-availability-btn" class="borrow-btn">Reservar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const params = new URLSearchParams(window.location.search);
+            const title = params.get('title') || 'Livro Desconhecido';
+            const author = params.get('author') || 'Autor Desconhecido';
+            const year = params.get('year') || 'Não informado';
+            const description = params.get('description') || 'Descrição não disponível.';
+            const availability = params.get('availability') || 'Indisponível';
+            const cover = params.get('cover') || '';
+
+            document.getElementById('details-book-cover').src = cover;
+            document.getElementById('details-book-title').textContent = title;
+            document.getElementById('details-book-author').textContent = author;
+            document.getElementById('details-book-year').textContent = year;
+            document.getElementById('details-book-description').textContent = description;
+
+            const availabilitySpan = document.getElementById('details-book-availability');
+            availabilitySpan.textContent = availability;
+
+            const getBookBtn = document.getElementById('get-book-btn');
+            const oldBorrowBtn = document.getElementById('details-availability-btn');
+            const pickupQuestion = document.querySelector('.book-pickup-question');
+
+            if (availability === 'Disponível') {
+                availabilitySpan.classList.add('available-status');
+                availabilitySpan.classList.remove('unavailable');
+
+                getBookBtn.style.display = 'inline-block';
+                pickupQuestion.style.display = 'block';
+                oldBorrowBtn.style.display = 'none';
+            } else {
+                availabilitySpan.classList.add('unavailable');
+                availabilitySpan.classList.remove('available-status');
+
+                getBookBtn.style.display = 'none';
+                pickupQuestion.style.display = 'none';
+                oldBorrowBtn.style.display = 'inline-block';
+            }
+        });
+
+        function goToReservePage() {
+            const title = document.getElementById('details-book-title').textContent;
+            const author = document.getElementById('details-book-author').textContent;
+            const cover = document.getElementById('details-book-cover').src;
+            const availability = document.getElementById('details-book-availability').textContent;
+
+            const params = new URLSearchParams();
+            params.append('title', title);
+            params.append('author', author);
+            params.append('cover', cover);
+            params.append('availability', availability);
+
+            // Redireciona corretamente com crase e aspas
+            window.location.href = `reserva.html?${params.toString()}`;
+        }
+    </script>
+</body>
+</html>

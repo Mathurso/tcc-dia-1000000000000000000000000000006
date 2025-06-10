@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Book In - Aluno</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="logo"><img src="Book In.png" alt="Logo" id="logo"></div>
+        <div class="nav-container">
+            <nav>
+                <ul>
+                    <li><a href="#home" class="nav-link">Início</a></li>
+                    <li><a href="#catalogo" class="nav-link">Catálogo</a></li>
+                    <li><a href="#disponiveis" class="nav-link">Disponíveis</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="search-profile">
+            <div class="search-container">
+                <input type="text" class="search-bar" placeholder="Procure um livro aqui">
+                <i class="fas fa-search search-icon"></i>
+            </div>
+            <div class="icon"><i class="fas fa-bell"></i></div> 
+            <div class="icon profile-icon"><i class="fas fa-user"></i></div>
+        </div>
+    </header>
+
+    <main id="home">
+        <section class="left">
+            <div class="welcome-container">
+                <h1>Bem-vindo(a) ao <img src="Book In.png" alt="Logo" id="logo2"></h1>
+                <p class="subtitle"><em>Sua jornada virtual pela biblioteca!</em></p>
+            </div>
+            <div id="cat">
+                <h2>“O que devo ler agora?”</h2>
+                <p class="description"><em>Quer ler, mas não sabe onde encontrar um livro?</em></p>
+                <button onclick="scrollToSection('catalogo')">Ver catálogo de livros</button>
+            </div>
+        </section>
+        <section class="right">
+            <div class="right-content">
+                <h2>Disponíveis na Biblioteca</h2>
+                <p>Todos os livros disponíveis na biblioteca no momento.</p>
+                <div class="book-container">
+                    <img src="livroo.jpg" alt="Livro 1" class="book book1">
+                    <img src="livro2.jpg" alt="Livro 2" class="book book2">
+                    <img src="livro3.jpg" alt="Livro 3" class="book book3">
+                </div>
+                <button id="dsp" onclick="scrollToSection('disponiveis')">Ver agora</button>
+            </div>
+        </section>
+    </main>
+
+    <section id="catalogo" class="section">
+        <div class="section-content">
+            <h2>Catálogo de Livros</h2>
+            <p>Explore nossa coleção completa de livros</p>
+            <div class="genre-tabs">
+                <button class="genre-tab active" data-filter="all">Todos</button>
+                <button class="genre-tab" data-filter="fantasia">Fantasia</button>
+                <button class="genre-tab" data-filter="misterio">Mistério</button>
+                <button class="genre-tab" data-filter="romance">Romance</button>
+            </div>
+            
+            <div class="books-grid">
+                <div class="catalog-book" data-genre="fantasia">
+                    <img src="livroo.jpg" alt="Livro 1">
+                    <h3>Coraline</h3>
+                    <p class="author">Autor: Neil Gaiman</p>
+                    <p class="genre">Gênero: Fantasia</p>
+                    <button class="details-btn" onclick="openBookDetailsPage(
+                        'Coraline',
+                        'Neil Gaiman',
+                        'Desconhecido',
+                        'Coraline é um livro de fantasia sombria que conta a história de uma jovem garota que encontra uma versão bizarra e ligeiramente melhorada de sua vida através de uma porta secreta em sua nova casa. Mas as aparências enganam.',
+                        'Disponível',
+                        'livroo.jpg'
+                    )">Ver detalhes</button>
+                </div>
+
+                <div class="catalog-book" data-genre="misterio">
+                    <img src="livro2.jpg" alt="Livro 2">
+                    <h3>Sherlock Holmes: Um mistério em vermelho</h3>
+                    <p class="author">Autor: Arthur Conan</p>
+                    <p class="genre">Gênero: Mistério</p>
+                    <button class="details-btn" onclick="openBookDetailsPage(
+                        'Sherlock Holmes: Um mistério em vermelho',
+                        'Arthur Conan Doyle',
+                        'Desconhecido',
+                        'Um estudo em vermelho é o primeiro romance de Sherlock Holmes, apresentando o famoso detetive particular e seu fiel companheiro, Dr. Watson, enquanto investigam um misterioso assassinato em Londres.',
+                        'Disponível',
+                        'livro2.jpg'
+                    )">Ver detalhes</button>
+                </div>
+
+                <div class="catalog-book" data-genre="romance">
+                    <img src="livro3.jpg" alt="Livro 3">
+                    <h3>Os miseráveis</h3>
+                    <p class="author">Autor: Victor Hugo</p>
+                    <p class="genre">Gênero: Romance</p>
+                    <button class="details-btn" onclick="openBookDetailsPage(
+                        'Os miseráveis',
+                        'Victor Hugo',
+                        'Desconhecido',
+                        'Os Miseráveis é um romance histórico que narra a vida de Jean Valjean, um ex-condenado que busca redenção em meio à pobreza e injustiça social na França do século XIX.',
+                        'Disponível',
+                        'livro3.jpg'
+                    )">Ver detalhes</button>
+                </div>
+                
+                <div class="catalog-book" data-genre="fantasia">
+                    <img src="livro4.jpg" alt="Livro 4">
+                    <h3>As crônicas de Narnia</h3>
+                    <p class="author">Autor: C. S. Lewis</p>
+                    <p class="genre">Gênero: Fantasia</p>
+                    <button class="details-btn" onclick="openBookDetailsPage(
+                        'As crônicas de Narnia',
+                        'C. S. Lewis',
+                        'Desconhecido',
+                        'As Crônicas de Nárnia é uma série de sete livros de fantasia que narra as aventuras de crianças que descobrem um mundo mágico habitado por criaturas falantes e liderado pelo leão Aslan.',
+                        'Disponível',
+                        'livro4.jpg'
+                    )">Ver detalhes</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="disponiveis" class="section">
+        <div class="section-content">
+            <h2>Livros Disponíveis</h2>
+            <p>Confira os livros disponíveis para empréstimo:</p>
+            
+            <div class="available-books">
+                <div class="available-book">
+                    <img src="livroo.jpg" alt="Livro 1">
+                    <div class="book-info">
+                        <h3>Coraline</h3>
+                        <p class="author">Autor: Neil Gaiman</p>
+                        <p class="status available">Disponível</p>
+                        <button class="borrow-btn" onclick="goToReservationPage(
+                            'Coraline',
+                            'Neil Gaiman',
+                            'livroo.jpg'
+                        )">Reservar</button>
+                    </div>
+                </div>
+                
+                <div class="available-book">
+                    <img src="livro2.jpg" alt="Livro 2">
+                    <div class="book-info">
+                        <h3>Sherlock Holmes: Um mistério em vermelho</h3>
+                        <p class="author">Autor: Arthur Conan</p>
+                        <p class="status available">Disponível</p>
+                        <button class="borrow-btn" onclick="goToReservationPage(
+                            'Sherlock Holmes: Um mistério em vermelho',
+                            'Arthur Conan Doyle',
+                            'livro2.jpg'
+                        )">Reservar</button>
+                    </div>
+                </div>
+                
+                <div class="available-book">
+                    <img src="livro3.jpg" alt="Livro 3">
+                    <div class="book-info">
+                        <h3>Os miseráveis</h3>
+                        <p class="author">Autor: Victor Hugo</p>
+                        <p class="status available">Disponível</p>
+                        <button class="borrow-btn" onclick="goToReservationPage(
+                            'Os miseráveis',
+                            'Victor Hugo',
+                            'livro3.jpg'
+                        )">Reservar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function scrollToSection(id) {
+            const element = document.getElementById(id);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            } else {
+                console.warn(`Elemento com ID '${id}' não encontrado para rolagem.`);
+            }
+        }
+
+        function filterBooks(genre) {
+            const genreTabs = document.querySelectorAll('.genre-tab');
+            genreTabs.forEach(tab => {
+                if (tab.textContent.toLowerCase() === genre || (genre === 'all' && tab.textContent.toLowerCase() === 'todos')) {
+                    tab.classList.add('active');
+                } else {
+                    tab.classList.remove('active');
+                }
+            });
+
+            const books = document.querySelectorAll('.catalog-book');
+            books.forEach(book => {
+                if (genre === 'all' || book.dataset.genre === genre) {
+                    book.style.display = 'block';
+                } else {
+                    book.style.display = 'none';
+                }
+            });
+        }
+
+        function openBookDetailsPage(title, author, year, description, availability, cover) {
+            const params = new URLSearchParams();
+            params.append('title', title);
+            params.append('author', author);
+            params.append('year', year);
+            params.append('description', description);
+            params.append('availability', availability);
+            params.append('cover', cover); 
+
+            window.location.href = `detalhes.html?${params.toString()}`;
+        }
+
+        function goToReservationPage(title, author, cover) {
+            const params = new URLSearchParams();
+            params.append('title', title);
+            params.append('author', author);
+            params.append('cover', cover);
+            window.location.href = `reserva.html?${params.toString()}`;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const genreTabs = document.querySelectorAll('.genre-tab');
+            genreTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const filter = tab.dataset.filter;
+                    filterBooks(filter);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
