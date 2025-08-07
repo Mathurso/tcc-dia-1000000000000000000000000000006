@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cadastro - Book In</title>
+  <link rel="stylesheet" href="cadastro.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="form-box">
+      <h1>Cadastrar</h1>
+      <form id="form-cadastro">
+        <label for="nome">Nome Completo:</label>
+        <input type="text" id="nome" name="nome" placeholder="DIGITE SEU NOME COMPLETO" required />
+
+        <label for="email">E-mail:</label>
+        <input type="email" id="email" name="email" placeholder="DIGITE SEU E-MAIL" required />
+
+        <label for="senha">Senha:</label>
+        <input type="password" id="senha" name="senha" placeholder="CRIE UMA SENHA" required />
+
+        <label for="confirmar">Confirmar Senha:</label>
+        <input type="password" id="confirmar" name="confirmar" placeholder="CONFIRME SUA SENHA" required />
+
+        <button type="submit">CADASTRAR</button>
+        <p>Já possui uma conta? <a href="login.html">Entrar</a></p>
+      </form>
+    </div>
+  </div>
+
+  <script src="cadastro.js"></script>
+</body>
+</html>
